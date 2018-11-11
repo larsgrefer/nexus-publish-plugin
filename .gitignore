@@ -5,3 +5,7 @@ lombok.config
 
 # IDEA
 out
+
+*.iml
+.idea/*
+!.idea/copyright
