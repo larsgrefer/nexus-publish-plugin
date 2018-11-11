@@ -60,7 +60,7 @@ public class StagingPluginIntegrationTest {
 
         ourExtension.getUsername().set("foo");
         theirExtension.setUsername("bar");
-        assertThat(ourExtension.getPassword().getOrNull()).isEqualTo("foo");
+        assertThat(ourExtension.getUsername().getOrNull()).isEqualTo("foo");
 
         theirExtension.setPassword("secret1");
         ourExtension.getPassword().set("secret2");
