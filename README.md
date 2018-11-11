@@ -37,7 +37,7 @@ nexusPublishing {
 ```
 
 If the [`io.codearte.nexus-staging` plugin]() is applied on the root project, the following default values change:
-```groovy
+```gradle
 nexusPublishing {
     packageGroup = rootProject.nexusStaging.packageGroup
     stagingProfileId = rootProject.nexusStaging.stagingProfileId
