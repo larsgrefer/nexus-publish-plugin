@@ -19,8 +19,8 @@ import io.codearte.gradle.nexus.NexusStagingExtension;
 import io.codearte.gradle.nexus.NexusStagingPlugin;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
