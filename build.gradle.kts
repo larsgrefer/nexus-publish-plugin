@@ -55,6 +55,10 @@ val shadowed by configurations.creating
 sourceSets["main"].apply {
     compileClasspath = files(compileClasspath, shadowed)
 }
+sourceSets["test"].apply {
+    compileClasspath = files(compileClasspath, shadowed)
+    runtimeClasspath = files(runtimeClasspath, shadowed)
+}
 
 dependencies {
     shadowed("com.squareup.retrofit2:retrofit:2.4.0")
@@ -69,13 +73,17 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.11.1")
 }
 
-val shadowJar by tasks.existing(ShadowJar::class) {
+val shadowJar by tasks.getting(ShadowJar::class) {
     classifier = ""
     configurations = listOf(shadowed)
     exclude("META-INF/maven/**")
     listOf("retrofit2", "okhttp3", "okio", "com").forEach {
         relocate(it, "${project.group}.nexus.shadow.$it")
     }
+}
+
+val pluginUnderTestMetadata by tasks.existing(PluginUnderTestMetadata::class) {
+    pluginClasspath.setFrom(shadowJar.archivePath)
 }
 
 tasks {
@@ -85,6 +93,7 @@ tasks {
     }
     withType<Test> {
         useJUnitPlatform()
+        dependsOn(shadowJar)
     }
 }
 
