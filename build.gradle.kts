@@ -3,9 +3,16 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     `java-gradle-plugin`
     `maven-publish`
+    id("com.gradle.build-scan") version "1.16"
     id("com.gradle.plugin-publish") version "0.10.0"
     id("com.diffplug.gradle.spotless") version "3.16.0"
     id("com.github.johnrengelman.shadow") version "4.0.2"
+    id("io.freefair.lombok") version "2.8.1"
+}
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
 }
 
 group = "de.marcphilipp.gradle"
@@ -103,9 +110,13 @@ val sourcesJar by tasks.creating(Jar::class) {
     from(sourceSets["main"].allSource)
 }
 
+val javadoc by tasks.existing(Javadoc::class) {
+    classpath = files(sourceSets["main"].compileClasspath, shadowed)
+}
+
 val javadocJar by tasks.creating(Jar::class) {
     classifier = "javadoc"
-    from(tasks.named("javadoc"))
+    from(javadoc)
 }
 
 // used by com.gradle.plugin-publish plugin
